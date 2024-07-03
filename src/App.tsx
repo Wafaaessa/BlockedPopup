@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Popup from "./components/Popup";
+import "./App.css";
+import "./Popup.css";
 
-function App() {
+const App: React.FC = () => {
+  const [isBlocked, setIsBlocked] = useState<boolean>(true);
+  const closePopup = () => {
+    setIsBlocked(false);
+  };
+
+  useEffect(() => {
+    if (isBlocked) {
+      const popupElement = document.getElementById("popup");
+      if (popupElement) {
+        popupElement.style.display = "block";
+      }
+    }
+  }, [isBlocked]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App">{isBlocked && <Popup closePopup={closePopup} />}</div>
   );
-}
+};
 
 export default App;
